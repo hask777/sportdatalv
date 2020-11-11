@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CompDetails extends Model
+class Team extends Model
 {
-    //
+    protected $guarded = [];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Team;
 
 class TeamsController extends Controller
 {
@@ -167,8 +168,10 @@ class TeamsController extends Controller
         foreach($comp_teams as $comp_team)
         {
             dd($comp_team);
+            // $db_team = new Team($comp_team);
+            // $db_team->save();
         }
-  
+
         return view('teams.index');
     }
 }
