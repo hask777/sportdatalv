@@ -167,9 +167,9 @@ class TeamsController extends Controller
 
         foreach($comp_teams as $comp_team)
         {
-            dd($comp_team);
-            // $db_team = new Team($comp_team);
-            // $db_team->save();
+            //dd($comp_team);
+            $db_team = new Team($comp_team);
+            $db_team->save();
         }
 
         return view('teams.index');
