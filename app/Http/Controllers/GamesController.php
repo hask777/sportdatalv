@@ -15,6 +15,23 @@ class GamesController extends Controller
             ->json();
         // dd($competitions);
 
+        $games = Game::all();
+
+        foreach($games as $game)
+        {
+            dd($game);
+        }
+
+        return view('games.index');
+    }
+
+    public function store(Request $request)
+    {
+        $competitions = Http::withHeaders(['Ocp-Apim-Subscription-Key'=>config('services.spdb.token')])
+            ->get('https://api.sportsdata.io/v3/soccer/scores/json/Competitions')
+            ->json();
+        // dd($competitions);
+
         foreach($competitions as $competition){
             // dump($competition['CompetitionId']);
             
@@ -264,6 +281,6 @@ class GamesController extends Controller
         }
         //dump($comp_games);
         
-        return view('test');
+        return view('games.store');
     }
 }

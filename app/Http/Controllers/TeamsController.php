@@ -15,6 +15,23 @@ class TeamsController extends Controller
             ->json();
         // dd($competitions);
 
+        $teams = Team::all();
+
+        foreach($teams as $teams)
+        {
+            dd($teams);
+        }
+
+        return view('teams.index');
+    }
+
+    public function store(Request $request)
+    {
+        $competitions = Http::withHeaders(['Ocp-Apim-Subscription-Key'=>config('services.spdb.token')])
+            ->get('https://api.sportsdata.io/v3/soccer/scores/json/Competitions')
+            ->json();
+        // dd($competitions);
+
         foreach($competitions as $competition){
             // dump($competition['CompetitionId']);
             
@@ -170,6 +187,6 @@ class TeamsController extends Controller
             $db_team->save();
         }
 
-        return view('teams.index');
+        return view('teams.store');
     }
 }
