@@ -22,8 +22,6 @@ class TeamsController extends Controller
             ->get('https://api.sportsdata.io/v3/soccer/scores/json/CompetitionDetails/'.$competition['CompetitionId'])
             ->json();
 
-            $teams = [];
-
             //dd($comp_detail);
             if(!empty($comp_detail['CompetitionId'])){
                 $comp_id = $comp_detail['CompetitionId'];

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use App\Game;
 
 class GamesController extends Controller
 {
@@ -20,12 +22,11 @@ class GamesController extends Controller
             ->get('https://api.sportsdata.io/v3/soccer/scores/json/CompetitionDetails/'.$competition['CompetitionId'])
             ->json();
 
-            $games = [];
-
             //dd($comp_detail);
             if(!empty($comp_detail['CompetitionId'])){
                 $comp_id = $comp_detail['CompetitionId'];
             }
+
             if(!empty($comp_detail['Games'])){
                 foreach($comp_detail['Games'] as $game)
                 {
@@ -88,7 +89,7 @@ class GamesController extends Controller
                         $game_team_name = $game['AwayTeamName'];               
                     }
                     if(!empty($game['AwayTeamCountryCode'])){
-                        $game = $game['AwayTeamCountryCode'];               
+                        $game_away_team_country_code = $game['AwayTeamCountryCode'];               
                     }
                     if(!empty($game['AwayTeamScore'])){
                         $game_team_score = $game['AwayTeamScore'];               
@@ -193,46 +194,75 @@ class GamesController extends Controller
                         $game_playoff_aggregate_score = $game['PlayoffAggregateScore'];              
                     }
                     
-  
                     $game_array = [
                         'CompetiitonId' => $comp_id,
-                        'TeamId' => $team_id,
-                        'AreaId' => $team_area_id,
-                        'VenueId' => $team_venue_id,
-                        'Key' => $team_key,
-                        'Name' => $team_name,
-                        'FullName' => $team_full_name,
-                        'Active' => $team_active,
-                        'AreaName' => $team_area_name,
-                        'VenueName'=> $team_venue_name,
-                        'Gender' => $team_gender,
-                        'Type' => $team_type,
-                        'Address' => $team_address,
-                        'City' => $team_city,
-                        'Zip' => $team_zip,
-                        'Phone' => $team_phone,
-                        'Fax' => $team_fax,
-                        'Website' => $team_website,
-                        'Email' => !empty($team_email)? $team_email:'',
-                        'Founded' => $team_founded,
-                        'ClubColor1' => !empty($team_color1)? $team_color1:'',
-                        'ClubColor2' => !empty($team_color2)? $team_color2:'',
-                        'ClubColor3' => !empty($team_color3)? $team_color3:'',
-                        'Nickname1' => !empty($team_nick1)? $team_nick1:'',
-                        'Nickname2' => !empty($team_nick2)? $team_nick2:'',
-                        'Nickname3' => !empty($team_nick3)? $team_nick3:'',
-                        'WikipediaLogoUrl' => !empty($team_wiki_logo)? $team_wiki_logo:'',
-                        'WikipediaWordMarkUrl' => !empty($team_wiki_url)? $team_wiki_url:'',
-                        'GlobalTeamId' => !empty($team_global_id)? $team_global_id:'',
+                        'GameId' => $game_id,
+                        'RoundId' => $game_round_id,
+                        'Season' => $game_season,
+                        'SeasonType' => $game_season_type,
+                        'Group' => !empty($game_group)? $game_group:'',
+                        'AwayTeamId' => $game_away_team_id,
+                        'HomeTeamId' => $game_home_team_id,
+                        'VenueId'=> $game_venue_id,
+                        'Day' => $game_day,
+                        'Datetime' => !empty($game_date_time)? $game_date_time:'',
+                        'Status' => $game_status,
+                        'Week' => $game_week,
+                        'Period' => $game_period,
+                        'Clock' => !empty($game_clock)? $game_clock:'',
+                        'Winner' => $game_winner,
+                        'VenueType' => $game_venue_type,
+                        'AwayTeamKey' => $game_away_team_key,
+                        'AwayTeamName' => $game_team_name,
+                        'AwayTeamCountryCode' => $game_away_team_country_code,
+                        'AwayTeamScorePeriod1' => !empty($game_away_team_period_1)? $game_away_team_period_1:'',
+                        'AwayTeamScoreExtraTime' => !empty($game_away_team_score_extra_time)? $game_away_team_score_extra_time:'',
+                        'HomeTeamKey' => !empty($game_home_team_key)? $game_home_team_key:'',
+                        'HomeTeamName' => $game_home_team_name,
+                        'HomeTeamCountryCode' => $game_team_country_code,
+                        'HomeTeamScore' => !empty($game_team_score)? $game_team_score:'',
+                        'HomeTeamScorePeriod1' => !empty($game_team_score_period_1)? $game_team_score_period_1:'',
+                        'HomeTeamScorePeriod2' => !empty($game_team_score_period_2)? $game_team_score_period_2:'',
+                        'HomeTeamScoreExtraTime' => !empty($game_team_score_extra_time)? $game_team_score_extra_time:'',
+                        'HomeTeamScorePenalty' => !empty($game_team_score_penalty)? $game_team_score_penalty:'',
+                        'HomeTeamMoneyLine' => !empty($game_home_team_money_line)? $game_home_team_money_line:'',
+                        'AwayTeamMoneyLine' => !empty($game_away_team_money_line)? $game_away_team_money_line:'',
+                        'DrawMoneyLine' => !empty($game_draw_money_line)? $game_draw_money_line:'',
+                        'PointSpread' => !empty($game_point_spread)? $game_point_spread:'',
+                        'HomeTeamPointSpreadPayout' => !empty($game_home_team_point_spread_payout)? $game_home_team_point_spread_payout:'',
+                        'AwayTeamPointSpreadPayout' => !empty($game_away_team_point_spread_payout)? $game_away_team_point_spread_payout:'',
+                        'OverUnder' => !empty($game_over_under)? $game_over_under:'',
+                        'OverPayout' => !empty($game_over_payout)? $game_over_payout:'',
+                        'UnderPayout' => !empty($game_attendance)? $game_attendance:'',
+                        'Updated' => !empty($game_updated)? $game_updated:'',
+                        'UpdatedUtc' => !empty($game_updated_utc)? $game_updated_utc:'',
+                        'GlobalGameId' => !empty($game_global_id)? $game_global_id:'',
+                        'GlobalAwayTeamId' => !empty($game_global_away_team_id)? $game_global_away_team_id:'',
+                        'GlobalHomeTeamId' => !empty($game_global_home_team_id)? $game_global_home_team_id:'',
+                        'ClockExtra' => !empty($game_clock_extra)? $game_clock_extra:'',
+                        'ClockDisplay' => !empty($game_clock_display)? $game_clock_display:'',
+                        'IsClosed' => !empty($game_is_closed)? $game_is_closed:'',
+                        'HomeTeamFormation' => !empty($game_home_team_formation)? $game_home_team_formation:'',
+                        'AwayTeamFormation' => !empty($game_away_team_formation)? $game_away_team_formation:'',
+                        'PlayoffAggregateScore' => !empty($game_playoff_aggregate_score)? $game_playoff_aggregate_score:'',
                     ];
 
-                    $games[] = $game_array;
-                        
+                    $comp_games[] = $game_array; 
+                    //dump($comp_games); 
+                    //dd($game_array);            
                 }
-                dump($games);
+                
             }
 
         }
+        
+        foreach($comp_games as $comp_game)
+        {
+            //dd($comp_team);
+            $db_game = new Game($comp_game);
+            $db_game->save();
+        }
+        //dump($comp_games);
         
         return view('test');
     }

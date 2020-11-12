@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 Route::get('/test', 'MainController@index');
 Route::get('/teams', 'TeamsController@index');
+Route::get('/games', 'GamesController@index');
