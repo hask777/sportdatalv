@@ -17,5 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test', 'MainController@index');
+Route::get('/areas', 'AreasController@index');
+Route::get('/areas/save', 'AreasController@store');
+Route::get('/competitions', 'CompetitionsController@index');
+Route::get('/competitions/save', 'CompetitionsController@store');
 Route::get('/teams', 'TeamsController@index');
 Route::get('/games', 'GamesController@index');
