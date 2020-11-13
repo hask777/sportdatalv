@@ -37,7 +37,11 @@ Route::get('/rounds/save', 'RoundsController@store');
 Route::get('/teams', 'TeamsController@index');
 // Route::get('/teams/{id}', 'TeamsController@show');
 Route::get('/teams/save', 'TeamsController@store');
+Route::get('/teams-list/save', 'TeamsListController@store');
 // Games
 Route::get('/games', 'GamesController@index');
 // Route::get('/games/{id}', 'GamesController@show');
 Route::get('/games/save', 'GamesController@store');
+// Players
+Route::get('/players', 'PlayersByTeamController@index');
+Route::get('/players-by-team/save', 'PlayersByTeamController@store');
