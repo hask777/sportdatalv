@@ -25,6 +25,11 @@ class TeamsController extends Controller
         return view('teams.index');
     }
 
+    public function show($id)
+    {
+        return view('teams.show');
+    }
+
     public function store(Request $request)
     {
         $competitions = Http::withHeaders(['Ocp-Apim-Subscription-Key'=>config('services.spdb.token')])
@@ -180,12 +185,12 @@ class TeamsController extends Controller
 
         //dump($comp_teams); 
 
-        foreach($comp_teams as $comp_team)
-        {
-            //dd($comp_team);
-            $db_team = new Team($comp_team);
-            $db_team->save();
-        }
+        // foreach($comp_teams as $comp_team)
+        // {
+        //     //dd($comp_team);
+        //     $db_team = new Team($comp_team);
+        //     $db_team->save();
+        // }
 
         return view('teams.store');
     }
