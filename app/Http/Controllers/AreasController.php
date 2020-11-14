@@ -19,7 +19,7 @@ class AreasController extends Controller
         $areas = Http::withHeaders(['Ocp-Apim-Subscription-Key'=>config('services.spdb.token')])
             ->get('https://api.sportsdata.io/v3/soccer/scores/json/Areas')
             ->json();
-        // dd($areas);
+        dd($areas);
 
         
         foreach($areas as $area){
