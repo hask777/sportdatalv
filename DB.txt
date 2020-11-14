@@ -1,0 +1,11 @@
+CLEARDB_DATABASE_URL: 
+
+
+db_user = b94e7230640b9e
+
+db_pass = e3a39282
+
+db_url = us-cdbr-east-02.cleardb.com
+
+db_name = heroku_1e4d4e8719eccb0
+
