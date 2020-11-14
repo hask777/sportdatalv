@@ -126,7 +126,7 @@ class TeamsListController extends Controller
         		'GlobalTeamId' => $team_global_id	
         	]);
 
-        	//$new_team_list->save();
+        	$new_team_list->save();
 
         }
 
