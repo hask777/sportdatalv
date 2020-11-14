@@ -185,12 +185,12 @@ class TeamsController extends Controller
 
         //dump($comp_teams); 
 
-        // foreach($comp_teams as $comp_team)
-        // {
-        //     //dd($comp_team);
-        //     $db_team = new Team($comp_team);
-        //     $db_team->save();
-        // }
+        foreach($comp_teams as $comp_team)
+        {
+            //dd($comp_team);
+            $db_team = new Team($comp_team);
+            $db_team->save();
+        }
 
         return view('teams.store');
     }
