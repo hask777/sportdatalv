@@ -27,6 +27,7 @@ class GamesController extends Controller
 
     public function store(Request $request)
     {
+        set_time_limit (3000);
         $competitions = Http::withHeaders(['Ocp-Apim-Subscription-Key'=>config('services.spdb.token')])
             ->get('https://api.sportsdata.io/v3/soccer/scores/json/Competitions')
             ->json();
