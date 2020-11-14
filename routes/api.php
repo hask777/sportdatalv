@@ -65,3 +65,9 @@ Route::get('seasons', function(){
     //dump($areas);
     return $seasons;
 });
+
+Route::get('teamslist', function(){
+    $teamslist = TeamList::all();
+    //dump($areas);
+    return $teamslist;
+});
