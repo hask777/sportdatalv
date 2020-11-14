@@ -67,6 +67,7 @@ class CompetitionsController extends Controller
                 'Format' => $comp_format,
                 'Key' => $comp_key,
             ]);
+            
             $comp->save(); 
         }
                     
