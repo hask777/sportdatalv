@@ -273,12 +273,12 @@ class GamesController extends Controller
 
         }
         //dump($comp_games);
-        // foreach($comp_games as $comp_game)
-        // {
-        //     //dd($comp_team);
-        //     $db_game = new Game($comp_game);
-        //     $db_game->save();
-        // }
+        foreach($comp_games as $comp_game)
+        {
+            //dd($comp_team);
+            $db_game = new Game($comp_game);
+            $db_game->save();
+        }
 
         
         return view('games.store');
